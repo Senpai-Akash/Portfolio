@@ -73,12 +73,12 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "LinkedIn",
-    url: "#", // To be updated with actual LinkedIn URL
+    url: "https://www.linkedin.com/in/akashanderson", 
     icon: "linkedin",
   },
   {
     label: "Email",
-    url: "mailto:#", // To be updated with actual email
+    url: "mailto:akashanderson889@gmail.com", 
     icon: "mail",
   },
 ];
