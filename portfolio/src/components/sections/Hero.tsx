@@ -1,9 +1,17 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { motion, useReducedMotion } from "framer-motion";
+import { Variants } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { Github } from "lucide-brands";
 import { siteConfig } from "@/lib/data";
+import { useLoading } from "@/components/LoadingProvider";
+
+// ─── PHOTO CONFIGURATION ──────────────────────────────────────
+// To add your photo, place an image (e.g. "photo.jpg" or "avatar.png") 
+// inside the "portfolio/public" directory and set its path here:
+const HERO_PHOTO_SRC = ""; // e.g. "/photo.jpg"
 
 function GridVisual() {
   return (
@@ -73,6 +81,7 @@ function GridVisual() {
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const { isLoading } = useLoading();
 
   const containerVariants = {
     hidden: {},
@@ -81,7 +90,7 @@ export function Hero() {
     },
   };
 
-  const itemVariants = prefersReducedMotion
+  const itemVariants: Variants = prefersReducedMotion
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
     : {
         hidden: { opacity: 0, y: 25 },
@@ -93,30 +102,42 @@ export function Hero() {
       };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-16">
-      <div className="section-container w-full">
-        <div className="grid lg:grid-cols-[1fr,1fr] gap-12 lg:gap-8 items-center">
-          {/* Left: Content */}
+    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 lg:py-0 overflow-hidden">
+      {/* Background ambient glow */}
+      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-accent/5 blur-[120px] pointer-events-none" />
+
+      {/* Photo Backdrop Layer (Seamlessly blends into the background when HERO_PHOTO_SRC is set) */}
+      {HERO_PHOTO_SRC && (
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-full lg:w-3/5 h-full opacity-20 lg:opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]">
+            <img
+              src={HERO_PHOTO_SRC}
+              alt="Akash portrait background"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="section-container relative z-10 w-full">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Middle-Left Content Area (Comfortably offset from the far left, centered vertically) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
-            className="max-w-xl"
+            animate={isLoading ? "hidden" : "visible"}
+            className="lg:col-span-7 xl:col-span-6 lg:col-start-2 max-w-xl mx-auto lg:mx-0"
           >
-            <motion.div variants={itemVariants} className="label-mono mb-6">
-              Software Developer & Engineering Enthusiast
-            </motion.div>
-
             <motion.h1
               variants={itemVariants}
               className="heading-display text-[clamp(3rem,8vw,5.5rem)] text-highlight mb-6"
             >
-              Akash
+              Akash Anderson
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="body-lg max-w-md mb-10"
+              className="body-lg max-w-md mb-10 text-text-secondary"
             >
               Building thoughtful software and exploring the boundaries of what
               technology can do. Focused on creating tools and experiences that
@@ -133,7 +154,7 @@ export function Hero() {
                     .querySelector("#work")
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent/20"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-accent/20 cursor-pointer"
               >
                 Explore My Work
                 <ArrowDown size={16} />
@@ -151,14 +172,27 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Visual */}
+          {/* Right Area: Visual or Portrait Card */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:block"
+            animate={isLoading ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hidden lg:flex lg:col-span-4 xl:col-span-5 items-center justify-center relative"
           >
-            <GridVisual />
+            {HERO_PHOTO_SRC ? (
+              <div className="relative w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden border border-border-strong/50 shadow-2xl bg-surface/30">
+                <img
+                  src={HERO_PHOTO_SRC}
+                  alt="Akash portrait"
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent opacity-60" />
+              </div>
+            ) : (
+              <div className="w-full">
+                <GridVisual />
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
@@ -166,8 +200,8 @@ export function Hero() {
       {/* Scroll indicator */}
       <motion.div
         initial={prefersReducedMotion ? { opacity: 0.5 } : { opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
+        animate={isLoading ? { opacity: 0 } : { opacity: 0.5 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
       >
         <span className="text-[10px] font-mono text-text-muted uppercase tracking-widest">
@@ -183,4 +217,3 @@ export function Hero() {
     </section>
   );
 }
-

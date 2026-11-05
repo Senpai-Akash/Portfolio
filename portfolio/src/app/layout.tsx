@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LoadingProvider } from "@/components/LoadingProvider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -77,7 +78,9 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <LoadingProvider>{children}</LoadingProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

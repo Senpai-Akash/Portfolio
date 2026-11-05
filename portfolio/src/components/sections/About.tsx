@@ -8,7 +8,7 @@ export function About() {
     <section id="about" className="py-24 md:py-32">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="01" title="ABOUT" />
+          <SectionHeader title="ABOUT" />
         </AnimatedSection>
 
         <div className="grid lg:grid-cols-[1fr,1.2fr] gap-12 lg:gap-20">

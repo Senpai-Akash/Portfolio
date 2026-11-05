@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from 'react';
 import { type LucideProps } from 'lucide-react';
 import { ArrowUp, Mail } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
@@ -21,6 +22,7 @@ export function Footer() {
     linkedin: <Linkedin size={16} />,
     mail: <Mail size={16} />,
   };
+  
 
   return (
     <footer className="border-t border-border bg-bg">
@@ -35,7 +37,11 @@ export function Footer() {
               AKASH
             </button>
             <p className="text-xs text-text-muted">
-              © {new Date().getFullYear()} Akash. All rights reserved.
+              
+              © {<Suspense fallback={<Loading />}>
+              new Date().getFullYear() </Suspense>
+              } Akash. All rights reserved.
+              
             </p>
           </div>
 
@@ -87,3 +93,6 @@ export function Footer() {
   );
 }
 
+function Loading() {
+  return <h2>🌀 Loading...</h2>;
+}

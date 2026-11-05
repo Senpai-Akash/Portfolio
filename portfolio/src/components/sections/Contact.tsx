@@ -17,7 +17,7 @@ export function Contact() {
     <section id="contact" className="py-24 md:py-32">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="06" title="CONTACT" />
+          <SectionHeader title="CONTACT" />
         </AnimatedSection>
 
         <div className="max-w-2xl">

@@ -137,7 +137,7 @@ export function FeaturedProjects() {
     <section id="work" className="py-24 md:py-32">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="02" title="SELECTED WORK" />
+          <SectionHeader title="SELECTED WORK" />
         </AnimatedSection>
 
         <div className="space-y-24 md:space-y-32">

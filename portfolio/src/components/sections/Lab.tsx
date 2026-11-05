@@ -20,7 +20,7 @@ export function Lab() {
     <section id="lab" className="py-24 md:py-32">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="04" title="THE LAB" />
+          <SectionHeader title="THE LAB" />
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>

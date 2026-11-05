@@ -18,7 +18,7 @@ export async function Engineering() {
     <section id="engineering" className="py-24 md:py-32 bg-surface-subtle/30">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="03" title="ENGINEERING" />
+          <SectionHeader title="ENGINEERING" />
         </AnimatedSection>
 
         <div className="grid lg:grid-cols-[1fr,1.5fr] gap-12 lg:gap-16">
@@ -50,50 +50,6 @@ export async function Engineering() {
                     <div className="h-20 bg-border/30 rounded-lg animate-pulse" />
                     <div className="h-20 bg-border/30 rounded-lg animate-pulse" />
                   </div>
-                </div>
-              )}
-
-              {/* Language distribution */}
-              {languageEntries.length > 0 ? (
-                <div>
-                  <h3 className="label-mono text-accent mb-5">Languages</h3>
-                  <div className="space-y-3">
-                    {languageEntries.map(([lang, pct]) => (
-                      <div key={lang} className="group">
-                        <div className="flex justify-between items-center mb-1.5">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                              style={{
-                                backgroundColor:
-                                  languageColors[lang] ?? "#6b7280",
-                              }}
-                            />
-                            <span className="text-sm text-text-primary">{lang}</span>
-                          </div>
-                          <span className="text-xs font-mono text-text-muted">
-                            {pct}%
-                          </span>
-                        </div>
-                        <div className="h-1 bg-border/50 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full transition-all duration-700"
-                            style={{
-                              width: `${(pct / maxLangPct) * 100}%`,
-                              backgroundColor:
-                                languageColors[lang] ?? "#6b7280",
-                              opacity: 0.7,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <h3 className="label-mono text-accent mb-5">Languages</h3>
-                  <p className="text-sm text-text-muted">Loading language data…</p>
                 </div>
               )}
             </div>

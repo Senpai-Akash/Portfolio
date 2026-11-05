@@ -19,7 +19,7 @@ export function Background() {
     <section id="background" className="py-24 md:py-32 bg-surface-subtle/30">
       <div className="section-container">
         <AnimatedSection>
-          <SectionHeader number="05" title="BACKGROUND" />
+          <SectionHeader title="BACKGROUND" />   
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>
