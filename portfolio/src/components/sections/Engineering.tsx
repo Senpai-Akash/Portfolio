@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { getGitHubUser, getGitHubRepos, getLanguageStats } from "@/lib/github";
 import { formatNumber, languageColors } from "@/lib/utils";
 import { GitStar } from "@/components/sections/EngineeringClient";
+import { ContributionGraph } from "@/components/sections/ContributionGraph";
 
 export async function Engineering() {
   const [user, repos, languages] = await Promise.all([
@@ -12,7 +13,6 @@ export async function Engineering() {
   ]);
 
   const languageEntries = Object.entries(languages).slice(0, 8);
-  const maxLangPct = languageEntries.length > 0 ? languageEntries[0][1] : 0;
 
   return (
     <section id="engineering" className="py-24 md:py-32 bg-surface-subtle/30">
@@ -121,6 +121,11 @@ export async function Engineering() {
             </div>
           </AnimatedSection>
         </div>
+
+        {/* Full-Width GitHub Contribution Graph */}
+        <AnimatedSection delay={0.3} className="mt-12 lg:mt-16">
+          <ContributionGraph />
+        </AnimatedSection>
       </div>
     </section>
   );
@@ -134,4 +139,3 @@ function StatCard({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-

@@ -130,7 +130,7 @@ export function Hero() {
           >
             <motion.h1
               variants={itemVariants}
-              className="heading-display text-[clamp(3rem,8vw,5.5rem)] text-highlight mb-6"
+              className="name-display text-[clamp(3.5rem,8.5vw,6rem)] text-highlight mb-6 tracking-tight"
             >
               Akash Anderson
             </motion.h1>

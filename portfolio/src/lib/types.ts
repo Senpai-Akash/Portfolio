@@ -1,4 +1,4 @@
-// Type definitions for the portfolio
+﻿// Type definitions for the portfolio
 
 export interface Project {
   id: string;
@@ -74,3 +74,19 @@ export interface GitHubLanguageStats {
   [language: string]: number;
 }
 
+// --- GitHub Contribution Graph ---
+export interface ContributionDay {
+  date: string;          // "2024-01-15"
+  contributionCount: number;
+  contributionLevel: "NONE" | "FIRST_QUARTILE" | "SECOND_QUARTILE" | "THIRD_QUARTILE" | "FOURTH_QUARTILE";
+  weekday: number;       // 0 = Sunday
+}
+
+export interface ContributionWeek {
+  contributionDays: ContributionDay[];
+}
+
+export interface ContributionCalendar {
+  totalContributions: number;
+  weeks: ContributionWeek[];
+}

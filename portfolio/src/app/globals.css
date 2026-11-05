@@ -1,6 +1,26 @@
 @import "tailwindcss";
 
 /* ============================================================
+   CLASH DISPLAY — Self-hosted from /public/fonts/
+   ============================================================ */
+
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
    DESIGN TOKENS — DARK THEME (primary) + LIGHT THEME (stub)
    ============================================================ */
 
@@ -92,6 +112,7 @@
   --font-heading: "Space Grotesk", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Clash Display", "Space Grotesk", system-ui, sans-serif;
 
   /* Animation timing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -148,6 +169,14 @@ body {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.05;
+}
+
+/* Hero display name — Clash Display only */
+.name-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.0;
 }
 
 .heading-1 {

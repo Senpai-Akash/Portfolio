@@ -1,4 +1,4 @@
-import type { GitHubUser, GitHubRepo, GitHubLanguageStats } from "@/lib/types";
+import type { GitHubUser, GitHubRepo, GitHubLanguageStats, ContributionCalendar } from "@/lib/types";
 
 const GITHUB_API_BASE = "https://api.github.com";
 const GITHUB_USERNAME = "Senpai-Akash";
@@ -107,3 +107,81 @@ export async function getLanguageStats(): Promise<GitHubLanguageStats> {
   );
 }
 
+/**
+ * Fetch the last 365 days of contribution calendar data via GitHub GraphQL API.
+ * Requires GITHUB_TOKEN environment variable for authentication.
+ * Returns null if the token is unavailable or the request fails.
+ */
+export async function getContributionCalendar(): Promise<ContributionCalendar | null> {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    return null;
+  }
+
+  const query = `
+    query ContributionCalendar($username: String!) {
+      user(login: $username) {
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                date
+                contributionCount
+                contributionLevel
+                weekday
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          username: GITHUB_USERNAME,
+        },
+      }),
+      next: { revalidate: CACHE_DURATION },
+    });
+
+    if (!response.ok) {
+      console.error(`GitHub GraphQL API error: ${response.status}`);
+      return null;
+    }
+
+    const json = (await response.json()) as {
+      data?: {
+        user?: {
+          contributionsCollection?: {
+            contributionCalendar?: ContributionCalendar;
+          };
+        };
+      };
+      errors?: Array<{ message: string }>;
+    };
+
+    if (json.errors?.length) {
+      console.error(
+        "GitHub GraphQL errors:",
+        json.errors.map((e) => e.message).join(", ")
+      );
+      return null;
+    }
+
+    return json.data?.user?.contributionsCollection?.contributionCalendar ?? null;
+  } catch (error) {
+    console.error("Failed to fetch contribution calendar:", error);
+    return null;
+  }
+}
