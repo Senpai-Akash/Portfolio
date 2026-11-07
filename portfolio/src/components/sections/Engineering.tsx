@@ -58,30 +58,6 @@ export async function Engineering() {
                   </div>
                 </div>
               )}
-
-              {/* Language breakdown */}
-              {languageEntries.length > 0 && (
-                <div>
-                  <h4 className="label-mono text-text-muted mb-3">Top Languages</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {languageEntries.map(([lang, pct]) => (
-                      <div
-                        key={lang}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-border bg-surface/20 text-xs font-mono text-text-secondary"
-                      >
-                        <span
-                          className="w-2 h-2 rounded-full flex-shrink-0"
-                          style={{
-                            backgroundColor: languageColors[lang] ?? "#6b7280",
-                          }}
-                        />
-                        <span>{lang}</span>
-                        <span className="text-text-muted">{pct}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </AnimatedSection>
 

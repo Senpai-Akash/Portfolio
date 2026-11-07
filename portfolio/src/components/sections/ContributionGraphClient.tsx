@@ -76,7 +76,7 @@ export function ContributionGraphClient({
   const weeks = calendar.weeks || [];
 
   // Dimensions
-  const cellSize = 15;
+  const cellSize = 14;
   const cellGap = 4;
   const step = cellSize + cellGap;
   const leftPadding = 36; // Space for weekday labels
