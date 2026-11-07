@@ -4,7 +4,7 @@ import { Mail, FileText, ArrowUpRight } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { siteConfig, socialLinks } from "@/lib/data";
+import { socialLinks } from "@/lib/data";
 
 const iconMap: Record<string, React.ReactNode> = {
   github: <Github size={20} />,
@@ -14,7 +14,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24 md:py-32">
+    <section id="contact" className="py-16 sm:py-20 md:py-28 lg:py-32">
       <div className="section-container">
         <AnimatedSection>
           <SectionHeader title="CONTACT" />
@@ -22,20 +22,20 @@ export function Contact() {
 
         <div className="max-w-2xl">
           <AnimatedSection delay={0.1}>
-            <h2 className="heading-display text-[clamp(2rem,5vw,3.5rem)] text-highlight mb-6">
+            <h2 className="heading-display text-[clamp(1.75rem,5vw,3rem)] text-highlight mb-4 sm:mb-6">
               Let&apos;s build something together.
             </h2>
           </AnimatedSection>
 
           <AnimatedSection delay={0.15}>
-            <p className="body-lg mb-10 max-w-lg">
+            <p className="body-lg mb-8 sm:mb-10 max-w-lg text-sm sm:text-base md:text-lg">
               Whether you have a project idea, a question, or just want to
               connect — I&apos;d love to hear from you.
             </p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* Social links */}
               {socialLinks.map((link) => (
                 <a
@@ -47,16 +47,16 @@ export function Contact() {
                       ? undefined
                       : "noopener noreferrer"
                   }
-                  className="flex items-center gap-4 p-4 rounded-lg border border-border hover:border-border-strong hover:bg-surface/20 transition-all duration-200 group"
+                  className="flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-lg border border-border hover:border-border-strong hover:bg-surface/20 active:bg-surface/30 transition-all duration-200 group"
                 >
-                  <span className="text-text-muted group-hover:text-accent transition-colors">
+                  <span className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0">
                     {iconMap[link.icon] ?? <Mail size={20} />}
                   </span>
-                  <div className="flex-1">
-                    <span className="text-sm font-medium text-text-primary group-hover:text-highlight transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-medium text-text-primary group-hover:text-highlight transition-colors block">
                       {link.label}
                     </span>
-                    <p className="text-xs text-text-muted">
+                    <p className="text-xs text-text-muted truncate">
                       {link.url === "#" || link.url === "mailto:#"
                         ? "Link to be added"
                         : link.url.replace("mailto:", "").replace("https://", "")}
@@ -64,7 +64,7 @@ export function Contact() {
                   </div>
                   <ArrowUpRight
                     size={16}
-                    className="text-text-muted group-hover:text-accent transition-colors"
+                    className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0"
                   />
                 </a>
               ))}
@@ -72,22 +72,22 @@ export function Contact() {
               {/* Resume download */}
               <a
                 href="#"
-                className="flex items-center gap-4 p-4 rounded-lg border border-dashed border-border hover:border-border-strong transition-all duration-200 group"
+                className="flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-lg border border-dashed border-border hover:border-border-strong active:bg-surface/20 transition-all duration-200 group"
               >
-                <span className="text-text-muted group-hover:text-accent transition-colors">
+                <span className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0">
                   <FileText size={20} />
                 </span>
-                <div className="flex-1">
-                  <span className="text-sm font-medium text-text-primary group-hover:text-highlight transition-colors">
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium text-text-primary group-hover:text-highlight transition-colors block">
                     Résumé
                   </span>
-                  <p className="text-xs text-text-muted">
+                  <p className="text-xs text-text-muted truncate">
                     Download link to be added
                   </p>
                 </div>
                 <ArrowUpRight
                   size={16}
-                  className="text-text-muted group-hover:text-accent transition-colors"
+                  className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0"
                 />
               </a>
             </div>
@@ -97,4 +97,3 @@ export function Contact() {
     </section>
   );
 }
-

@@ -4,11 +4,6 @@ import { useState, useRef, useCallback } from "react";
 import type { ContributionCalendar, ContributionDay } from "@/lib/types";
 
 // ─── EXACT PORTFOLIO COLOR TOKENS ─────────────────────────────
-// Level 0: #24343D
-// Level 1: #0F4C75
-// Level 2: #1D6797
-// Level 3: #3282B8
-// Level 4: #BBE1FA
 const LEVEL_COLORS: Record<string, string> = {
   NONE: "#24343D",
   FIRST_QUARTILE: "#0F4C75",
@@ -81,11 +76,11 @@ export function ContributionGraphClient({
   const weeks = calendar.weeks || [];
 
   // Dimensions
-  const cellSize = 11;
-  const cellGap = 3;
+  const cellSize = 15;
+  const cellGap = 4;
   const step = cellSize + cellGap;
-  const leftPadding = 32; // Space for weekday labels
-  const topPadding = 22;  // Space for month labels
+  const leftPadding = 36; // Space for weekday labels
+  const topPadding = 24;  // Space for month labels
 
   // Month label positions (detect month changes across weeks)
   const monthLabels: { label: string; x: number }[] = [];
@@ -95,7 +90,6 @@ export function ContributionGraphClient({
     if (week.contributionDays.length > 0) {
       const firstDay = week.contributionDays[0];
       const month = parseInt(firstDay.date.split("-")[1], 10) - 1;
-      // Ensure month labels aren't placed too close to each other
       if (month !== prevMonth) {
         prevMonth = month;
         monthLabels.push({
@@ -112,29 +106,36 @@ export function ContributionGraphClient({
   return (
     <div>
       {/* Header Info */}
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div>
-          <h3 className="label-mono text-accent mb-1.5">GitHub Contributions</h3>
-          
+          <h3 className="label-mono text-accent mb-1">GitHub Contributions</h3>
+          <p className="text-xs sm:text-sm text-text-secondary">
+            Live activity retrieved from GitHub across the latest 365 days
+          </p>
         </div>
 
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:text-highlight transition-colors self-start sm:self-auto group"
-        >
-          <span>@{username}</span>
-          <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-            ↗
+        <div className="flex items-center gap-3 self-start sm:self-auto">
+          <span className="lg:hidden text-[11px] font-mono text-text-muted/70">
+            ← Scroll horizontally →
           </span>
-        </a>
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-accent hover:text-highlight transition-colors group"
+          >
+            <span>@{username}</span>
+            <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              ↗
+            </span>
+          </a>
+        </div>
       </div>
 
-      {/* Calendar Graph Container with horizontal scroll on small screens */}
+      {/* Calendar Graph Container with horizontal touch scroll */}
       <div
         ref={containerRef}
-        className="relative overflow-x-auto pb-2 scrollbar-thin"
+        className="relative overflow-x-auto pb-3 scrollbar-thin [-webkit-overflow-scrolling:touch]"
       >
         <svg
           width={svgWidth}
@@ -149,8 +150,8 @@ export function ContributionGraphClient({
             <text
               key={`month-${idx}-${m.label}`}
               x={m.x}
-              y={13}
-              fontSize="10"
+              y={14}
+              fontSize="11"
               fill="#7a99ad"
               fontFamily="var(--font-mono), monospace"
             >
@@ -163,8 +164,8 @@ export function ContributionGraphClient({
             <text
               key={`weekday-${dayIndex}`}
               x={4}
-              y={topPadding + dayIndex * step + cellSize * 0.8}
-              fontSize="9"
+              y={topPadding + dayIndex * step + cellSize * 0.78}
+              fontSize="10"
               fill="#7a99ad"
               fontFamily="var(--font-mono), monospace"
             >
@@ -186,8 +187,8 @@ export function ContributionGraphClient({
                   y={y}
                   width={cellSize}
                   height={cellSize}
-                  rx={2}
-                  ry={2}
+                  rx={3}
+                  ry={3}
                   fill={color}
                   className="transition-all duration-150 cursor-pointer hover:stroke-highlight hover:stroke-[1.5]"
                   onMouseEnter={(e) => handleMouseEnter(day, e)}
@@ -212,10 +213,10 @@ export function ContributionGraphClient({
           )}
         </svg>
 
-        {/* Hover Tooltip */}
+        {/* Hover / Touch Tooltip */}
         {hoveredDay && (
           <div
-            className="pointer-events-none absolute z-30 px-3 py-1.5 rounded-lg text-xs font-mono bg-surface border border-border-strong text-text-primary shadow-xl -translate-x-1/2 -translate-y-full transition-opacity duration-150"
+            className="pointer-events-none absolute z-30 px-3 py-1.5 rounded-lg text-xs font-mono bg-surface border border-border-strong text-text-primary shadow-xl -translate-x-1/2 -translate-y-full transition-opacity duration-150 whitespace-nowrap"
             style={{
               left: `${hoveredDay.x}px`,
               top: `${hoveredDay.y - 8}px`,
@@ -231,21 +232,22 @@ export function ContributionGraphClient({
         )}
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center justify-between gap-4 mt-4 pt-3 border-t border-border/50 text-xs font-mono text-text-muted">
-        <p className="text-xl font-heading font-semibold text-highlight tracking-tight">
-            {calendar.totalContributions.toLocaleString()}
-            <span className="text-sm font-normal text-text-secondary ml-2 font-mono">
-              contributions in the last year
-            </span>
-          </p>
-        <div className="flex items-center gap-1.5">
+      {/* Legend & Summary Info (Responsive flex column on mobile, row on tablet/desktop) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mt-4 pt-3 border-t border-border/50 text-xs font-mono text-text-muted">
+        <p className="text-base sm:text-lg font-heading font-semibold text-highlight tracking-tight">
+          {calendar.totalContributions.toLocaleString()}
+          <span className="text-xs sm:text-sm font-normal text-text-secondary ml-2 font-mono">
+            contributions in the last year
+          </span>
+        </p>
+
+        <div className="flex items-center gap-1.5 self-start sm:self-auto">
           <span className="text-[10px]">Less</span>
           {(["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"] as const).map(
             (lvl) => (
               <div
                 key={lvl}
-                className="w-[11px] h-[11px] rounded-sm"
+                className="w-[13px] h-[13px] sm:w-[14px] sm:h-[14px] rounded-[3px]"
                 style={{ backgroundColor: LEVEL_COLORS[lvl] }}
                 title={lvl}
                 aria-hidden="true"
@@ -258,4 +260,3 @@ export function ContributionGraphClient({
     </div>
   );
 }
-

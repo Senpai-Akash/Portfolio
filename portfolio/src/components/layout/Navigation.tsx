@@ -22,7 +22,9 @@ export function Navigation() {
   // Lock body scroll when mobile nav is open
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMobileOpen]);
 
   const handleNavClick = (href: string) => {
@@ -42,7 +44,7 @@ export function Navigation() {
             : "opacity-100 translate-y-0"
         } ${
           isScrolled
-            ? "bg-bg/80 backdrop-blur-xl border-b border-border"
+            ? "bg-bg/85 backdrop-blur-xl border-b border-border shadow-sm"
             : "bg-transparent"
         }`}
       >
@@ -52,20 +54,21 @@ export function Navigation() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
+              setIsMobileOpen(false);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="font-heading font-bold text-lg tracking-tight text-text-primary hover:text-highlight transition-colors"
+            className="font-heading font-bold text-lg sm:text-xl tracking-tight text-text-primary hover:text-highlight transition-colors py-2"
           >
             AKASH
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-7 lg:gap-8">
             {navItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => handleNavClick(item.href)}
-                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200 relative group"
+                className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200 relative group py-1"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
@@ -75,28 +78,29 @@ export function Navigation() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-subtle transition-all duration-200"
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-subtle transition-all duration-200 cursor-pointer"
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
             </button>
           </div>
 
-          {/* Mobile: Theme + Hamburger */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile: Theme + Hamburger (Min 44px tap targets for mobile usability) */}
+          <div className="flex md:hidden items-center gap-1.5">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-text-muted hover:text-text-primary transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary active:bg-surface-subtle transition-colors cursor-pointer"
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="p-2 rounded-lg text-text-muted hover:text-text-primary transition-colors"
+              className="w-10 h-10 flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary active:bg-surface-subtle transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
+              aria-expanded={isMobileOpen}
             >
-              {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </nav>
@@ -110,26 +114,31 @@ export function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 bg-bg/95 backdrop-blur-xl md:hidden flex flex-col justify-between pt-24 pb-12 px-6"
           >
-            <nav className="flex flex-col items-center justify-center h-full gap-8">
+            <nav className="flex flex-col items-center justify-center flex-1 gap-6 sm:gap-8">
               {navItems.map((item, i) => (
                 <motion.button
                   key={item.href}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}
                   onClick={() => handleNavClick(item.href)}
-                  className="text-2xl font-heading font-medium text-text-secondary hover:text-highlight transition-colors"
+                  className="w-full text-center py-2.5 px-4 text-2xl font-heading font-medium text-text-secondary hover:text-highlight active:text-highlight active:bg-surface-subtle/50 rounded-xl transition-all"
                 >
                   {item.label}
                 </motion.button>
               ))}
             </nav>
+
+            <div className="text-center">
+              <span className="text-xs font-mono text-text-muted">
+                Portfolio • Akash Anderson
+              </span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type Theme = "dark" | "light";
 
@@ -13,31 +13,30 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    setMounted(true);
     // Read saved preference or system preference
     const saved = localStorage.getItem("theme") as Theme | null;
     if (saved === "dark" || saved === "light") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme(saved);
     } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
       setTheme("light");
     }
+    isMounted.current = true;
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!isMounted.current) return;
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  // Prevent hydration mismatch — render children with the correct theme
-  // The inline script in layout.tsx handles the flash prevention
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
@@ -50,4 +49,3 @@ export function useTheme() {
   if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
   return ctx;
 }
-

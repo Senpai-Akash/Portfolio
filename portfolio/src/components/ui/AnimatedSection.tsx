@@ -16,7 +16,8 @@ export function AnimatedSection({
   delay = 0,
 }: AnimatedSectionProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  // -30px margin ensures mobile viewports trigger smoothly without excessive scroll
+  const isInView = useInView(ref, { once: true, margin: "-30px" });
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
@@ -27,10 +28,10 @@ export function AnimatedSection({
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 25 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
         delay,
         ease: [0.16, 1, 0.3, 1],
       }}
@@ -39,6 +40,15 @@ export function AnimatedSection({
     </motion.div>
   );
 }
+
+const motionComponents = {
+  h1: motion.h1,
+  h2: motion.h2,
+  h3: motion.h3,
+  p: motion.p,
+  span: motion.span,
+  div: motion.div,
+};
 
 interface AnimatedTextProps {
   children: React.ReactNode;
@@ -54,23 +64,23 @@ export function AnimatedText({
   as: Component = "div",
 }: AnimatedTextProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const isInView = useInView(ref, { once: true, margin: "-30px" });
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
     return <Component className={className}>{children}</Component>;
   }
 
-  const MotionComponent = motion.create(Component);
+  const MotionComponent = motionComponents[Component] || motion.div;
 
   return (
     <MotionComponent
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
       transition={{
-        duration: 0.5,
+        duration: 0.45,
         delay,
         ease: [0.16, 1, 0.3, 1],
       }}
@@ -79,4 +89,3 @@ export function AnimatedText({
     </MotionComponent>
   );
 }
-

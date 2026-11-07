@@ -7,11 +7,11 @@ export async function ContributionGraph() {
 
   if (!calendar) {
     return (
-      <div className="rounded-xl border border-border bg-bg/60 p-6 md:p-8 backdrop-blur-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-border/50">
+      <div className="rounded-xl border border-border bg-bg/60 p-4 sm:p-6 md:p-8 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 pb-4 border-b border-border/50">
           <div>
             <h3 className="label-mono text-accent mb-1">GitHub Contributions</h3>
-            <p className="text-xl font-heading font-semibold text-text-primary">
+            <p className="text-lg sm:text-xl font-heading font-semibold text-text-primary">
               Contribution Activity
             </p>
           </div>
@@ -26,7 +26,7 @@ export async function ContributionGraph() {
           </a>
         </div>
 
-        <div className="rounded-lg border border-border-strong/40 bg-surface/20 p-6 text-center max-w-xl mx-auto my-4 space-y-3">
+        <div className="rounded-lg border border-border-strong/40 bg-surface/20 p-5 sm:p-6 text-center max-w-xl mx-auto my-2 sm:my-4 space-y-3">
           <div className="w-10 h-10 rounded-full bg-surface-subtle flex items-center justify-center mx-auto text-accent">
             <svg
               width="20"
@@ -45,7 +45,7 @@ export async function ContributionGraph() {
             </svg>
           </div>
           <h4 className="text-sm font-medium text-text-primary">
-            Sorry for the inconvienence. Will fix or update soon
+            GitHub Token Configuration Required
           </h4>
           <p className="text-xs text-text-secondary leading-relaxed">
             To display real live contribution history from GitHub, set your{" "}
@@ -59,7 +59,7 @@ export async function ContributionGraph() {
               href={siteConfig.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-hover text-text-primary text-xs font-medium rounded-lg border border-border transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-surface hover:bg-surface-hover active:bg-surface-hover/80 text-text-primary text-xs font-medium rounded-lg border border-border transition-colors w-full sm:w-auto justify-center"
             >
               View contributions directly on GitHub
               <span>↗</span>
@@ -71,7 +71,7 @@ export async function ContributionGraph() {
   }
 
   return (
-    <div className="rounded-xl border border-border bg-bg/60 p-6 md:p-8 backdrop-blur-sm">
+    <div className="rounded-xl border border-border bg-bg/60 p-4 sm:p-6 md:p-8 backdrop-blur-sm">
       <ContributionGraphClient
         calendar={calendar}
         username={siteConfig.githubUsername}
@@ -80,4 +80,3 @@ export async function ContributionGraph() {
     </div>
   );
 }
-

@@ -65,10 +65,10 @@ export function Preloader({ onComplete }: PreloaderProps) {
             scale: 0.98,
             transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
           }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg px-4"
         >
           {/* Ambient background glow */}
-          <div className="absolute w-[360px] h-[360px] rounded-full bg-accent/10 blur-[100px] pointer-events-none" />
+          <div className="absolute w-[280px] sm:w-[360px] h-[280px] sm:h-[360px] rounded-full bg-accent/10 blur-[80px] sm:blur-[100px] pointer-events-none" />
 
           {/* Grid pattern background matching hero */}
           <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
@@ -94,7 +94,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           </div>
 
           {/* Center of page: Name "Akash" + Loading Sequence */}
-          <div className="relative z-10 flex flex-col items-center justify-center px-4">
+          <div className="relative z-10 flex flex-col items-center justify-center px-4 w-full max-w-sm">
             <motion.div
               initial={
                 prefersReducedMotion
@@ -105,7 +105,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="text-center"
             >
-              <h1 className="font-heading font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-highlight select-none drop-shadow-[0_0_35px_rgba(50,130,184,0.35)]">
+              <h1 className="font-heading font-bold text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-highlight select-none drop-shadow-[0_0_35px_rgba(50,130,184,0.35)]">
                 Akash
               </h1>
             </motion.div>
@@ -115,9 +115,9 @@ export function Preloader({ onComplete }: PreloaderProps) {
               initial={
                 prefersReducedMotion ? { opacity: 1 } : { opacity: 0, width: 0 }
               }
-              animate={{ opacity: 1, width: "200px" }}
+              animate={{ opacity: 1, width: "100%" }}
               transition={{ delay: 0.2, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="h-[2px] w-48 sm:w-60 bg-surface-subtle/80 rounded-full overflow-hidden mt-6 relative"
+              className="h-[2px] w-40 sm:w-56 md:w-60 max-w-[240px] bg-surface-subtle/80 rounded-full overflow-hidden mt-6 relative"
             >
               <div
                 className="h-full bg-gradient-to-r from-accent to-highlight shadow-[0_0_12px_rgba(50,130,184,0.8)] transition-all duration-75 ease-out"
