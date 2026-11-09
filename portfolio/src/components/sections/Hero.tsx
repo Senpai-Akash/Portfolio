@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Variants } from "framer-motion";
@@ -9,77 +8,12 @@ import { siteConfig } from "@/lib/data";
 import { useLoading } from "@/components/LoadingProvider";
 
 // ─── PHOTO CONFIGURATION ──────────────────────────────────────
-// To add your photo, place an image (e.g. "photo.jpg" or "avatar.png") 
-// inside the "portfolio/public" directory and set its path here:
-const HERO_PHOTO_SRC = ""; // e.g. "/photo.jpg"
-
-function GridVisual() {
-  return (
-    <div className="relative w-full h-full min-h-[350px] sm:min-h-[400px] lg:min-h-[500px]">
-      {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.15]">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-accent" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-grid)" />
-        </svg>
-      </div>
-
-      {/* Floating nodes */}
-      <div className="absolute inset-0">
-        {/* Central node cluster */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          {/* Central circle */}
-          <div className="w-3 h-3 rounded-full bg-accent shadow-[0_0_20px_rgba(50,130,184,0.4)]" />
-
-          {/* Connection lines radiating out */}
-          <svg className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[300px] h-[280px] sm:h-[300px] opacity-30" viewBox="-150 -150 300 300">
-            <line x1="0" y1="0" x2="80" y2="-60" stroke="#3282B8" strokeWidth="0.75" />
-            <line x1="0" y1="0" x2="-70" y2="-80" stroke="#3282B8" strokeWidth="0.75" />
-            <line x1="0" y1="0" x2="90" y2="50" stroke="#3282B8" strokeWidth="0.75" />
-            <line x1="0" y1="0" x2="-60" y2="70" stroke="#3282B8" strokeWidth="0.75" />
-            <line x1="0" y1="0" x2="-100" y2="10" stroke="#3282B8" strokeWidth="0.75" />
-            <line x1="0" y1="0" x2="30" y2="90" stroke="#3282B8" strokeWidth="0.75" />
-
-            {/* Endpoint dots */}
-            <circle cx="80" cy="-60" r="2" fill="#3282B8" />
-            <circle cx="-70" cy="-80" r="2" fill="#3282B8" />
-            <circle cx="90" cy="50" r="2" fill="#BBE1FA" />
-            <circle cx="-60" cy="70" r="2" fill="#3282B8" />
-            <circle cx="-100" cy="10" r="2" fill="#BBE1FA" />
-            <circle cx="30" cy="90" r="2" fill="#3282B8" />
-
-            {/* Secondary connections */}
-            <line x1="80" y1="-60" x2="120" y2="-30" stroke="#3282B8" strokeWidth="0.5" opacity="0.5" />
-            <line x1="-70" y1="-80" x2="-110" y2="-50" stroke="#3282B8" strokeWidth="0.5" opacity="0.5" />
-            <line x1="90" y1="50" x2="130" y2="80" stroke="#3282B8" strokeWidth="0.5" opacity="0.5" />
-            <circle cx="120" cy="-30" r="1.5" fill="#3282B8" opacity="0.5" />
-            <circle cx="-110" cy="-50" r="1.5" fill="#3282B8" opacity="0.5" />
-            <circle cx="130" cy="80" r="1.5" fill="#3282B8" opacity="0.5" />
-          </svg>
-        </div>
-
-        {/* Decorative data elements */}
-        <div className="absolute top-[15%] right-[10%] font-mono text-[10px] text-text-muted opacity-40 select-none">
-          <div>sys.init()</div>
-          <div className="text-accent">▸ ready</div>
-        </div>
-        <div className="absolute bottom-[20%] left-[8%] font-mono text-[10px] text-text-muted opacity-40 select-none">
-          <div>nodes: 6</div>
-          <div>edges: 9</div>
-        </div>
-      </div>
-
-      {/* Atmospheric glow — subtle */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-accent/5 blur-[80px]" />
-    </div>
-  );
-}
-
-export function Hero() {
+const HERO_PORTRAIT = {
+  webp: "/images/akash-portrait.webp",
+  png: "/images/akash-portrait.png",
+  alt: "Akash Anderson portrait",
+};
+  export function Hero(){
   const prefersReducedMotion = useReducedMotion();
   const { isLoading } = useLoading();
 
@@ -102,31 +36,18 @@ export function Hero() {
       };
 
   return (
-    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-20 pb-12 sm:pt-24 sm:pb-16 lg:py-0 overflow-hidden">
+    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:py-0 overflow-hidden">
       {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] lg:w-[550px] h-[350px] sm:h-[500px] lg:h-[550px] rounded-full bg-accent/5 blur-[100px] sm:blur-[120px] pointer-events-none" />
-
-      {/* Photo Backdrop Layer (Seamlessly blends into the background when HERO_PHOTO_SRC is set) */}
-      {HERO_PHOTO_SRC && (
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-full lg:w-3/5 h-full opacity-15 sm:opacity-20 lg:opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]">
-            <img
-              src={HERO_PHOTO_SRC}
-              alt="Akassh portrait background"
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-        </div>
-      )}
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] lg:w-[600px] h-[350px] sm:h-[500px] lg:h-[600px] rounded-full bg-accent/5 blur-[100px] sm:blur-[140px] pointer-events-none" />
 
       <div className="section-container relative z-10 w-full">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Middle-Left Content Area (Responsive on mobile, tablet, and desktop) */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 items-center">
+          {/* Left Column: Headline, Bio & Action Buttons */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isLoading ? "hidden" : "visible"}
-            className="lg:col-span-7 xl:col-span-6 lg:col-start-2 max-w-xl mx-auto lg:mx-0 w-full"
+            className="lg:col-span-7 xl:col-span-6 max-w-xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start"
           >
             <motion.h1
               variants={itemVariants}
@@ -172,27 +93,59 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Area: Visual or Portrait Card (Shown on desktop, hidden on small screens) */}
+          {/* Right Column: Naturally Integrated Personal Portrait */}
           <motion.div
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={isLoading ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex lg:col-span-4 xl:col-span-5 items-center justify-center relative"
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 35, scale: 0.98 }}
+            animate={isLoading ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-6 flex items-end justify-center lg:justify-end relative w-full"
           >
-            {HERO_PHOTO_SRC ? (
-              <div className="relative w-full max-w-md aspect-[4/5] rounded-2xl overflow-hidden border border-border-strong/50 shadow-2xl bg-surface/30">
-                <img
-                  src={HERO_PHOTO_SRC}
-                  alt="Akassh portrait"
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent opacity-60" />
-              </div>
-            ) : (
-              <div className="w-full">
-                <GridVisual />
-              </div>
-            )}
+            <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[450px] xl:max-w-[490px] flex flex-col items-center lg:items-end">
+              {/* Backlight Ambient Glow for Silhouette Depth */}
+              <div
+                aria-hidden="true"
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-6 w-[260px] sm:w-[340px] lg:w-[400px] h-[300px] sm:h-[380px] lg:h-[440px] rounded-full bg-accent/20 blur-[85px] sm:blur-[115px] pointer-events-none -z-10"
+              />
+
+              {/* Secondary Soft Depth Rim Glow */}
+              <div
+                aria-hidden="true"
+                className="absolute top-10 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-16 w-[180px] sm:w-[240px] lg:w-[280px] h-[180px] sm:h-[240px] lg:h-[280px] rounded-full bg-surface/40 blur-[70px] sm:blur-[90px] pointer-events-none -z-10"
+              />
+
+              {/* Floating Container for Subtle Organic Presence */}
+              <motion.div
+                animate={
+                  prefersReducedMotion
+                    ? {}
+                    : {
+                        y: [0, -6, 0],
+                      }
+                }
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative w-full flex justify-center lg:justify-end"
+              >
+                {/* Natural shadow & smooth fade into hero background at bottom edge */}
+                <div className="relative w-full drop-shadow-[0_20px_40px_rgba(15,76,117,0.35)]">
+                  <picture>
+                    <source srcSet={HERO_PORTRAIT.webp} type="image/webp" />
+                    <img
+                      src={HERO_PORTRAIT.png}
+                      alt={HERO_PORTRAIT.alt}
+                      className="w-full h-auto object-contain object-bottom select-none pointer-events-none [mask-image:linear-gradient(to_bottom,black_75%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_98%)]"
+                      width={1024}
+                      height={1024}
+                      loading="eager"
+                      fetchPriority="high"
+                    />
+                  </picture>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -216,4 +169,4 @@ export function Hero() {
       </motion.div>
     </section>
   );
-}
+  }
