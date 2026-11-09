@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, FileText, ArrowUpRight } from "lucide-react";
+import { Mail, FileText, ArrowUpRight, Download } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -71,7 +71,8 @@ export function Contact() {
 
               {/* Resume download */}
               <a
-                href="#"
+                href="/Akash_Anderson_Resume.pdf"
+                download="Akash_Anderson_Resume.pdf"
                 className="flex items-center gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-lg border border-dashed border-border hover:border-border-strong active:bg-surface/20 transition-all duration-200 group"
               >
                 <span className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0">
@@ -82,10 +83,10 @@ export function Contact() {
                     Résumé
                   </span>
                   <p className="text-xs text-text-muted truncate">
-                    Download link to be added 
+                    PDF • Direct Download
                   </p>
                 </div>
-                <ArrowUpRight
+                <Download
                   size={16}
                   className="text-text-muted group-hover:text-accent transition-colors flex-shrink-0"
                 />
