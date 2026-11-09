@@ -6,14 +6,9 @@ import { ArrowDown } from "lucide-react";
 import { Github } from "lucide-brands";
 import { siteConfig } from "@/lib/data";
 import { useLoading } from "@/components/LoadingProvider";
+import { AsciiPortrait } from "@/components/ui/AsciiPortrait";
 
-// ─── PHOTO CONFIGURATION ──────────────────────────────────────
-const HERO_PORTRAIT = {
-  webp: "/images/akash-portrait.webp",
-  png: "/images/akash-portrait.png",
-  alt: "Akash Anderson portrait",
-};
-  export function Hero(){
+export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const { isLoading } = useLoading();
 
@@ -41,24 +36,24 @@ const HERO_PORTRAIT = {
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] lg:w-[600px] h-[350px] sm:h-[500px] lg:h-[600px] rounded-full bg-accent/5 blur-[100px] sm:blur-[140px] pointer-events-none" />
 
       <div className="section-container relative z-10 w-full">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 items-center">
-          {/* Left Column: Headline, Bio & Action Buttons */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-0 items-center min-h-[calc(100vh-6rem)] lg:min-h-screen">
+          {/* Left Column: Headline, Bio & Action Buttons (Layered on top of overlapping ASCII portrait) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isLoading ? "hidden" : "visible"}
-            className="lg:col-span-7 xl:col-span-6 max-w-xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start"
+            className="relative z-20 lg:col-span-7 xl:col-span-6 max-w-xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start pointer-events-auto"
           >
             <motion.h1
               variants={itemVariants}
-              className="name-display text-[clamp(2.75rem,8vw,5.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words"
+              className="name-display text-[clamp(2.75rem,8vw,5.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words drop-shadow-[0_4px_16px_rgba(27,38,44,0.9)]"
             >
               Akash Anderson
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed"
+              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-[0_2px_8px_rgba(27,38,44,0.85)]"
             >
               Building thoughtful software and exploring the boundaries of what
               technology can do. Focused on creating tools and experiences that
@@ -85,7 +80,7 @@ const HERO_PORTRAIT = {
                 href={siteConfig.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-3 border border-border-strong text-text-secondary hover:text-text-primary hover:border-accent text-sm font-medium rounded-lg transition-all duration-200 w-full sm:w-auto active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-3 border border-border-strong text-text-secondary hover:text-text-primary hover:border-accent text-sm font-medium rounded-lg transition-all duration-200 w-full sm:w-auto active:scale-[0.98] bg-bg/40 backdrop-blur-xs"
               >
                 <Github size={16} />
                 GitHub
@@ -93,58 +88,37 @@ const HERO_PORTRAIT = {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Naturally Integrated Personal Portrait */}
+          {/* Right Column: Oversized High-Resolution ASCII Character Portrait */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 35, scale: 0.98 }}
             animate={isLoading ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 xl:col-span-6 flex items-end justify-center lg:justify-end relative w-full"
+            className="lg:col-span-5 xl:col-span-6 flex items-center justify-center lg:justify-end relative w-full z-10"
           >
-            <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[450px] xl:max-w-[490px] flex flex-col items-center lg:items-end">
+            {/* Breakout Container: Allows the portrait to occupy the right half and overlap into the left text */}
+            <div className="relative lg:absolute lg:right-[-6%] xl:right-[-4%] 2xl:right-[2%] lg:top-1/2 lg:-translate-y-1/2 w-full max-w-[360px] sm:max-w-[460px] md:max-w-[540px] lg:max-w-none lg:w-[680px] xl:w-[780px] 2xl:w-[840px] h-[480px] sm:h-[580px] md:h-[680px] lg:h-[780px] xl:h-[860px] 2xl:h-[920px] flex flex-col items-center lg:items-end pointer-events-auto">
               {/* Backlight Ambient Glow for Silhouette Depth */}
               <div
                 aria-hidden="true"
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-6 w-[260px] sm:w-[340px] lg:w-[400px] h-[300px] sm:h-[380px] lg:h-[440px] rounded-full bg-accent/20 blur-[85px] sm:blur-[115px] pointer-events-none -z-10"
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-16 w-[360px] sm:w-[480px] lg:w-[620px] xl:w-[720px] h-[400px] sm:h-[540px] lg:h-[700px] xl:h-[800px] rounded-full bg-accent/20 blur-[100px] sm:blur-[140px] pointer-events-none -z-10"
               />
 
               {/* Secondary Soft Depth Rim Glow */}
               <div
                 aria-hidden="true"
-                className="absolute top-10 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-16 w-[180px] sm:w-[240px] lg:w-[280px] h-[180px] sm:h-[240px] lg:h-[280px] rounded-full bg-surface/40 blur-[70px] sm:blur-[90px] pointer-events-none -z-10"
+                className="absolute top-12 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-28 w-[260px] sm:w-[360px] lg:w-[480px] h-[260px] sm:h-[360px] lg:h-[480px] rounded-full bg-surface/35 blur-[80px] sm:blur-[110px] pointer-events-none -z-10"
               />
 
-              {/* Floating Container for Subtle Organic Presence */}
-              <motion.div
-                animate={
-                  prefersReducedMotion
-                    ? {}
-                    : {
-                        y: [0, -6, 0],
-                      }
-                }
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="relative w-full flex justify-center lg:justify-end"
-              >
-                {/* Natural shadow & smooth fade into hero background at bottom edge */}
-                <div className="relative w-full drop-shadow-[0_20px_40px_rgba(15,76,117,0.35)]">
-                  <picture>
-                    <source srcSet={HERO_PORTRAIT.webp} type="image/webp" />
-                    <img
-                      src={HERO_PORTRAIT.png}
-                      alt={HERO_PORTRAIT.alt}
-                      className="w-full h-auto object-contain object-bottom select-none pointer-events-none [mask-image:linear-gradient(to_bottom,black_75%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_98%)]"
-                      width={1024}
-                      height={1024}
-                      loading="eager"
-                      fetchPriority="high"
-                    />
-                  </picture>
-                </div>
-              </motion.div>
+              {/* Interactive ASCII Portrait Canvas */}
+              <div className="relative w-full h-full drop-shadow-[0_20px_45px_rgba(15,76,117,0.4)]">
+                <AsciiPortrait imageSrc="/images/akash-portrait.png" className="w-full h-full" />
+              </div>
+
+              {/* Subtle tech label */}
+              <div className="hidden sm:flex items-center gap-1.5 font-mono text-[10px] text-text-muted/60 tracking-wider mt-1 select-none uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent/70 animate-pulse" />
+                <span>interactive ascii canvas // hover to scatter</span>
+              </div>
             </div>
           </motion.div>
         </div>

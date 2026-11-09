@@ -82,7 +82,7 @@ export function Contact() {
                     Résumé
                   </span>
                   <p className="text-xs text-text-muted truncate">
-                    Download link to be added
+                    Download link to be added 
                   </p>
                 </div>
                 <ArrowUpRight
