@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LoadingProvider } from "@/components/LoadingProvider";
@@ -23,6 +23,13 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   weight: ["400", "500"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Akash — Software Developer & Engineering Enthusiast",
@@ -77,7 +84,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <LoadingProvider>{children}</LoadingProvider>
         </ThemeProvider>

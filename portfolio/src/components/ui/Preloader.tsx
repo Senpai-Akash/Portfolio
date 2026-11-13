@@ -27,6 +27,17 @@ export function Preloader({ onComplete }: PreloaderProps) {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
+    let completed = false;
+
+    const finish = () => {
+      if (completed) return;
+      completed = true;
+      setIsVisible(false);
+      onComplete();
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+
     const duration = 1400; // 1.4 seconds smooth loading animation
     const startTime = Date.now();
 
@@ -37,20 +48,24 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
       if (elapsed >= duration) {
         clearInterval(interval);
-        setTimeout(() => {
-          setIsVisible(false);
-          onComplete();
-          document.body.style.overflow = "";
-          document.documentElement.style.overflow = "";
-        }, 300);
+        setTimeout(finish, 300);
       }
     }, 25);
 
+    // Failsafe: always finish after 4s even if something goes wrong
+    const failsafe = setTimeout(finish, 4000);
+
     return () => {
       clearInterval(interval);
+      clearTimeout(failsafe);
+      // Always restore scroll on cleanup
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
+      if (!completed) {
+        onComplete();
+      }
     };
+    // onComplete is now stable via useCallback — safe to include
   }, [onComplete, prefersReducedMotion]);
 
   return (

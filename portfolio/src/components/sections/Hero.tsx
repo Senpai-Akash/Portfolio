@@ -31,7 +31,7 @@ export function Hero() {
       };
 
   return (
-    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:py-0 overflow-hidden">
+    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:py-0 lg:overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] lg:w-[600px] h-[350px] sm:h-[500px] lg:h-[600px] rounded-full bg-accent/5 blur-[100px] sm:blur-[140px] pointer-events-none" />
 

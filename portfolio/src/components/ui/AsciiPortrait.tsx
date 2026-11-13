@@ -31,6 +31,7 @@ export function AsciiPortrait({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isReady, setIsReady] = useState(false);
+  const isVisibleRef = useRef(true);
 
   // Mouse interaction state in ref to avoid re-renders during 60FPS loop
   const mouseRef = useRef({
@@ -82,10 +83,13 @@ export function AsciiPortrait({
 
     ctx.scale(dpr, dpr);
 
-    // High-density columns: 145 on large desktop, 105 on tablet, 80 on mobile
+    // Adaptive columns: fewer on mobile to avoid performance issues
+    // 50 cols on small mobile, 70 on large mobile, 105 tablet, 155 desktop
     let cols = 145;
-    if (width < 450) {
-      cols = 80;
+    if (width < 400) {
+      cols = 50;
+    } else if (width < 500) {
+      cols = 65;
     } else if (width < 640) {
       cols = 105;
     } else if (width >= 700) {
@@ -212,6 +216,22 @@ export function AsciiPortrait({
     };
   }, [imageSrc, buildGrid]);
 
+  // Pause animation when component scrolls out of view
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
   // Main animation, physics & render loop
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -223,6 +243,12 @@ export function AsciiPortrait({
     const startTime = performance.now();
 
     const render = (time: number) => {
+      // Skip rendering when scrolled out of view — saves CPU/battery on mobile
+      if (!isVisibleRef.current) {
+        animFrameIdRef.current = requestAnimationFrame(render);
+        return;
+      }
+
       const elapsed = (time - startTime) * 0.001;
 
       const dpr = Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2);
@@ -410,7 +436,7 @@ export function AsciiPortrait({
       onTouchStart={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       className={`relative w-full h-full flex items-center justify-center cursor-crosshair select-none ${className}`}
-      style={{ touchAction: "none" }}
+      style={{ touchAction: "pan-y" }}
     >
       <canvas
         ref={canvasRef}
