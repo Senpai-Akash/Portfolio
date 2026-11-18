@@ -31,6 +31,8 @@ export interface TimelineEntry {
   organization: string;
   period: string;
   description?: string;
+  categoryLabel?: string;
+  link?: string;
   tags?: string[];
   current?: boolean;
 }

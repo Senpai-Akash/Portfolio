@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect, forwardRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { timelineEntries } from "@/lib/data";
@@ -189,12 +190,17 @@ const TimelineEntryRow = forwardRef<HTMLDivElement, TimelineEntryRowProps>(
               : "md:w-[calc(50%-2.5rem)] lg:w-[calc(50%-3.5rem)] md:ml-auto md:pl-8 lg:pl-12 md:text-left"
           }`}
         >
-          {/* Date / Duration */}
+          {/* Metadata Row: Period & Category Badge */}
           <div
-            className={`flex items-center gap-2 mb-2 ${
+            className={`flex flex-wrap items-center gap-2 mb-2 ${
               isLeft ? "md:justify-end" : "md:justify-start"
             }`}
           >
+            {entry.categoryLabel && (
+              <span className="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 rounded border border-border/80 text-text-muted bg-surface/30">
+                {entry.categoryLabel}
+              </span>
+            )}
             <span className="font-mono text-[11px] sm:text-xs text-text-muted uppercase tracking-widest">
               {entry.period}
             </span>
@@ -206,12 +212,35 @@ const TimelineEntryRow = forwardRef<HTMLDivElement, TimelineEntryRowProps>(
             )}
           </div>
 
-          {/* Job Title / Position Heading */}
-          <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary tracking-tight group-hover:text-highlight transition-colors duration-200">
-            {entry.title}
-          </h3>
+          {/* Job Title / Project Heading with optional link */}
+          <div
+            className={`flex items-center gap-2 ${
+              isLeft ? "md:justify-end" : "md:justify-start"
+            }`}
+          >
+            {entry.link ? (
+              <a
+                href={entry.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/link inline-flex items-center gap-1.5 hover:underline"
+              >
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary tracking-tight group-hover/link:text-highlight transition-colors duration-200">
+                  {entry.title}
+                </h3>
+                <ArrowUpRight
+                  size={15}
+                  className="text-text-muted group-hover/link:text-highlight transition-colors flex-shrink-0"
+                />
+              </a>
+            ) : (
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary tracking-tight group-hover:text-highlight transition-colors duration-200">
+                {entry.title}
+              </h3>
+            )}
+          </div>
 
-          {/* Organization Name */}
+          {/* Organization / Context Name */}
           <p className="text-xs sm:text-sm font-medium text-accent mt-1 tracking-wide">
             {entry.organization}
           </p>
