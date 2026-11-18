@@ -372,34 +372,62 @@ export function AsciiPortrait({
     };
   }, []);
 
-  // Desktop mouse handlers
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const curX = e.clientX - rect.left;
-    const curY = e.clientY - rect.top;
-    if (mouseRef.current.prevX === -9999) {
-      mouseRef.current.prevX = curX;
-      mouseRef.current.prevY = curY;
-    }
-    mouseRef.current.x = curX;
-    mouseRef.current.y = curY;
-    mouseRef.current.isHovered = true;
-  };
+  // Global cursor tracking so interaction works seamlessly across overlaying text and boundaries
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const curX = e.clientX - rect.left;
+      const curY = e.clientY - rect.top;
 
-  const handleMouseEnter = () => {
-    mouseRef.current.isHovered = true;
-  };
+      // Extended threshold so moving cursor over overlaying text or approaching canvas smoothly engages the portrait
+      const paddingX = 140;
+      const paddingY = 80;
+      const isInside = (
+        curX >= -paddingX &&
+        curX <= rect.width + paddingX &&
+        curY >= -paddingY &&
+        curY <= rect.height + paddingY
+      );
 
-  const handleMouseLeave = () => {
-    mouseRef.current.isHovered = false;
-    mouseRef.current.x = -9999;
-    mouseRef.current.y = -9999;
-    mouseRef.current.prevX = -9999;
-    mouseRef.current.prevY = -9999;
-    mouseRef.current.speed = 0;
-  };
+      if (isInside) {
+        if (mouseRef.current.prevX === -9999) {
+          mouseRef.current.prevX = curX;
+          mouseRef.current.prevY = curY;
+        }
+        mouseRef.current.x = curX;
+        mouseRef.current.y = curY;
+        mouseRef.current.isHovered = true;
+      } else if (mouseRef.current.isHovered) {
+        mouseRef.current.isHovered = false;
+        mouseRef.current.x = -9999;
+        mouseRef.current.y = -9999;
+        mouseRef.current.prevX = -9999;
+        mouseRef.current.prevY = -9999;
+        mouseRef.current.speed = 0;
+      }
+    };
+
+    const handleWindowBlur = () => {
+      mouseRef.current.isHovered = false;
+      mouseRef.current.x = -9999;
+      mouseRef.current.y = -9999;
+      mouseRef.current.prevX = -9999;
+      mouseRef.current.prevY = -9999;
+      mouseRef.current.speed = 0;
+    };
+
+    window.addEventListener("mousemove", handleGlobalMouseMove, { passive: true });
+    window.addEventListener("blur", handleWindowBlur);
+    document.addEventListener("mouseleave", handleWindowBlur);
+
+    return () => {
+      window.removeEventListener("mousemove", handleGlobalMouseMove);
+      window.removeEventListener("blur", handleWindowBlur);
+      document.removeEventListener("mouseleave", handleWindowBlur);
+    };
+  }, []);
 
   // Mobile / touch handlers
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -429,9 +457,6 @@ export function AsciiPortrait({
   return (
     <div
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onTouchMove={handleTouchMove}
       onTouchStart={handleTouchMove}
       onTouchEnd={handleTouchEnd}

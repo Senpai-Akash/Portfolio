@@ -42,18 +42,18 @@ export function Hero() {
             variants={containerVariants}
             initial="hidden"
             animate={isLoading ? "hidden" : "visible"}
-            className="relative z-20 lg:col-span-7 xl:col-span-6 max-w-xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start pointer-events-auto"
+            className="relative z-20 lg:col-span-7 xl:col-span-6 max-w-xl lg:max-w-2xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start pointer-events-none select-none"
           >
             <motion.h1
               variants={itemVariants}
-              className="name-display text-[clamp(2.75rem,8vw,5.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words drop-shadow-[0_4px_16px_rgba(27,38,44,0.9)]"
+              className="name-display text-[clamp(2.75rem,8vw,9.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words drop-shadow-[0_4px_16px_rgba(27,38,44,0.9)] pointer-events-none select-none"
             >
               Akash Anderson
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-[0_2px_8px_rgba(27,38,44,0.85)]"
+              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-[0_2px_8px_rgba(27,38,44,0.85)] pointer-events-none select-none"
             >
               Building thoughtful software and exploring the boundaries of what
               technology can do. Focused on creating tools and experiences that
@@ -62,7 +62,7 @@ export function Hero() {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto pointer-events-auto select-auto"
             >
               <button
                 onClick={() => {
