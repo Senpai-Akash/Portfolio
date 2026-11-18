@@ -52,16 +52,49 @@ export const labEntries: LabEntry[] = [
 
 // ─── Timeline ────────────────────────────────────────────────
 export const timelineEntries: TimelineEntry[] = [
-  // Add entries as information is provided
-  // Example structure:
-  // {
-  //   id: "edu-1",
-  //   type: "education",
-  //   title: "Degree Title",
-  //   organization: "University Name",
-  //   period: "2020 – 2024",
-  //   description: "Brief description.",
-  // },
+  {
+    id: "exp-1",
+    type: "experience",
+    title: "CyberSecurity & Tech Member",
+    organization: "Google Developer Groups (GDG) Reva University",
+    period: "10/2025 – 08/2026",
+    description:
+      "Contributed to AI-based initiatives and cybersecurity workshops. Collaborated with industry professionals to coordinate technical hackathons, architecture seminars, and hands-on developer training.",
+    tags: ["AI Systems", "Cybersecurity", "Python", "Hackathons", "Seminars"],
+    current: true,
+  },
+  {
+    id: "exp-2",
+    type: "experience",
+    title: "Web Development Member",
+    organization: "DevTrack",
+    period: "03/2025 – 01/2026",
+    description:
+      "Tackled real-world engineering challenges in close collaboration with industry experts. Built foundational knowledge and practices in production-grade web applications, maintainable architectures, and modern web standards.",
+    tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Production Web"],
+  },
+  {
+    id: "exp-3",
+    type: "experience",
+    title: "Full Stack Developer & Open Source Builder",
+    organization: "Independent Engineering",
+    period: "2024 – Present",
+    description:
+      "Engineered interactive web platforms including AI-Panel (multi-model side-by-side LLM benchmark suite), Travel Guardian (real-time tourist safety with Leaflet.js maps & WebSocket SOS alerts), and DevDex (developer profile cards).",
+    tags: ["Full Stack", "React", "Node.js", "WebSockets", "Docker", "REST APIs"],
+    current: true,
+  },
+  {
+    id: "exp-4",
+    type: "education",
+    title: "B.Tech in Computer Science & Engineering",
+    organization: "Reva University, Bengaluru",
+    period: "07/2024 – Present",
+    description:
+      "Pursuing Bachelor of Technology in Computer Science and Engineering with a 9.3 CGPA. Focusing on data structures, algorithmic design, systems architecture, operating systems, and scalable web technologies.",
+    tags: ["Computer Science", "Algorithms", "Data Structures", "DBMS", "CGPA 9.3"],
+    current: true,
+  },
 ];
 
 // ─── Social Links ────────────────────────────────────────────
