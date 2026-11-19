@@ -31,29 +31,29 @@ export function Hero() {
       };
 
   return (
-    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:py-0 lg:overflow-hidden">
+    <section className="relative min-h-screen min-h-[100dvh] flex items-center justify-center pt-24 pb-16 sm:pt-28 sm:pb-20 lg:py-0 overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] lg:w-[600px] h-[350px] sm:h-[500px] lg:h-[600px] rounded-full bg-accent/5 blur-[100px] sm:blur-[140px] pointer-events-none" />
 
       <div className="section-container relative z-10 w-full">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-0 items-center min-h-[calc(100vh-6rem)] lg:min-h-screen">
+        <div className="relative grid lg:grid-cols-12 gap-10 lg:gap-0 items-center min-h-[calc(100vh-6rem)] lg:min-h-screen">
           {/* Left Column: Headline, Bio & Action Buttons (Layered on top of overlapping ASCII portrait) */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isLoading ? "hidden" : "visible"}
-            className="relative z-20 lg:col-span-7 xl:col-span-6 max-w-xl lg:max-w-2xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start pointer-events-none select-none"
+            className="relative z-20 lg:col-span-7 xl:col-span-6 max-w-xl lg:max-w-2xl mx-auto lg:mx-0 w-full flex flex-col justify-center text-center lg:text-left items-center lg:items-start pointer-events-none select-none py-10 lg:py-0"
           >
             <motion.h1
               variants={itemVariants}
-              className="name-display text-[clamp(2.75rem,8vw,9.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words drop-shadow-[0_4px_16px_rgba(27,38,44,0.9)] pointer-events-none select-none"
+              className="name-display text-[clamp(2.75rem,8vw,9.5rem)] text-highlight mb-4 sm:mb-6 tracking-tight break-words drop-shadow-[0_4px_16px_rgba(27,38,44,0.95)] pointer-events-none select-none"
             >
               Akash Anderson
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-[0_2px_8px_rgba(27,38,44,0.85)] pointer-events-none select-none"
+              className="body-lg max-w-md mb-8 sm:mb-10 text-text-secondary text-sm sm:text-base md:text-lg leading-relaxed drop-shadow-[0_2px_8px_rgba(27,38,44,0.9)] pointer-events-none select-none"
             >
               Building thoughtful software and exploring the boundaries of what
               technology can do. Focused on creating tools and experiences that
@@ -88,15 +88,15 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Oversized High-Resolution ASCII Character Portrait */}
+          {/* Right Column: High-Resolution ASCII Character Portrait (Serves as centered background on mobile/tablet and right column on desktop) */}
           <motion.div
             initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 35, scale: 0.98 }}
             animate={isLoading ? { opacity: 0 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 xl:col-span-6 flex items-center justify-center lg:justify-end relative w-full z-10"
+            className="absolute inset-0 lg:relative lg:inset-auto lg:col-span-5 xl:col-span-6 flex items-center justify-center lg:justify-end w-full z-0 lg:z-10 pointer-events-auto overflow-hidden lg:overflow-visible"
           >
-            {/* Breakout Container: Allows the portrait to occupy the right half and overlap into the left text */}
-            <div className="relative lg:absolute lg:right-[-6%] xl:right-[-4%] 2xl:right-[2%] lg:top-1/2 lg:-translate-y-1/2 w-full max-w-[360px] sm:max-w-[460px] md:max-w-[540px] lg:max-w-none lg:w-[680px] xl:w-[780px] 2xl:w-[840px] h-[480px] sm:h-[580px] md:h-[680px] lg:h-[780px] xl:h-[860px] 2xl:h-[920px] flex flex-col items-center lg:items-end pointer-events-auto">
+            {/* Breakout Container: Centered in the background on mobile/tablet, right breakout on desktop */}
+            <div className="relative lg:absolute lg:right-[-6%] xl:right-[-4%] 2xl:right-[2%] lg:top-1/2 lg:-translate-y-1/2 w-full max-w-[420px] sm:max-w-[500px] md:max-w-[580px] lg:max-w-none lg:w-[680px] xl:w-[780px] 2xl:w-[840px] h-[520px] sm:h-[620px] md:h-[700px] lg:h-[780px] xl:h-[860px] 2xl:h-[920px] flex flex-col items-center lg:items-end opacity-70 sm:opacity-80 lg:opacity-100 transition-opacity pointer-events-auto">
               {/* Backlight Ambient Glow for Silhouette Depth */}
               <div
                 aria-hidden="true"
@@ -115,7 +115,7 @@ export function Hero() {
               </div>
 
               {/* Subtle tech label */}
-              <div className="hidden sm:flex items-center gap-1.5 font-mono text-[10px] text-text-muted/60 tracking-wider mt-1 select-none uppercase">
+              <div className="hidden lg:flex items-center gap-1.5 font-mono text-[10px] text-text-muted/60 tracking-wider mt-1 select-none uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent/70 animate-pulse" />
                 <span>interactive ascii canvas // hover to scatter</span>
               </div>

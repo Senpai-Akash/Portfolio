@@ -47,6 +47,7 @@ export function AsciiPortrait({
   const particlesRef = useRef<AsciiParticle[]>([]);
   const animFrameIdRef = useRef<number | null>(null);
   const imgDataRef = useRef<HTMLImageElement | null>(null);
+  const cellWidthRef = useRef<number>(3.6);
 
   // Piecewise tonal mapping to extract rich facial detail from skin and shadow ranges
   const mapTones = useCallback((rawLum: number): number => {
@@ -83,23 +84,27 @@ export function AsciiPortrait({
 
     ctx.scale(dpr, dpr);
 
-    // Adaptive columns: fewer on mobile to avoid performance issues
-    // 50 cols on small mobile, 70 on large mobile, 105 tablet, 155 desktop
-    let cols = 145;
-    if (width < 400) {
-      cols = 50;
+    // High-density adaptive columns for laptops, tablets, and mobile phones
+    let cols = 225;
+    if (width < 380) {
+      cols = 105; // Was 50 -> 2.1x density on small phones
     } else if (width < 500) {
-      cols = 65;
-    } else if (width < 640) {
-      cols = 105;
-    } else if (width >= 700) {
-      cols = 155;
+      cols = 125; // Was 65 -> 1.9x density on standard phones
+    } else if (width < 768) {
+      cols = 160; // Was 105 -> 1.5x density on tablets
+    } else if (width < 1024) {
+      cols = 190; // Was 145 -> higher tablet density
+    } else if (width < 1440) {
+      cols = 225; // Was 155 -> 1.45x density on laptops
+    } else {
+      cols = 255; // Ultra-high density on large displays
     }
 
     // Monospace aspect ratio (width-to-height is approx 0.55)
     const charAspect = 0.55;
     const cellWidth = width / cols;
     const cellHeight = cellWidth / charAspect;
+    cellWidthRef.current = cellWidth;
     const rows = Math.floor(height / cellHeight);
 
     // Offscreen canvas for fast pixel sampling
@@ -262,9 +267,9 @@ export function AsciiPortrait({
       const mouseRadius = mouse.radius;
       const mouseRadiusSq = mouseRadius * mouseRadius;
 
-      // Crisp monospace typography matched to cell size
-      const isLarge = width >= 600;
-      const fontSize = isLarge ? Math.max(6.5, Math.min(8.5, width / 95)) : Math.max(5.5, Math.min(7.5, width / 75));
+      // Crisp monospace typography matched strictly to cell width for zero horizontal bleeding
+      const cellW = cellWidthRef.current || (width / 200);
+      const fontSize = Math.max(3.8, Math.min(8.5, cellW * 1.55));
       ctx.font = `600 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -460,7 +465,7 @@ export function AsciiPortrait({
       onTouchMove={handleTouchMove}
       onTouchStart={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full h-full flex items-center justify-center cursor-crosshair select-none ${className}`}
+      className={`relative w-full h-full flex items-center justify-center cursor-default select-none ${className}`}
       style={{ touchAction: "pan-y" }}
     >
       <canvas

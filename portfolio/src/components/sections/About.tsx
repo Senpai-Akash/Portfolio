@@ -33,29 +33,7 @@ export function About() {
           {/* Right column — details */}
           <AnimatedSection delay={0.2}>
             <div className="space-y-8 sm:space-y-10">
-              {/* Technical Interests */}
-              <div>
-                <h3 className="label-mono text-accent mb-3 sm:mb-4">
-                  Technical Interests
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Full-Stack Development",
-                    "AI & Machine Learning",
-                    "System Design",
-                    "Developer Tools",
-                    "Recommendation Systems",
-                    "Open Source",
-                  ].map((interest) => (
-                    <span
-                      key={interest}
-                      className="px-3 py-1.5 text-xs sm:text-sm text-text-secondary border border-border rounded-md hover:border-border-strong hover:text-text-primary transition-colors duration-200"
-                    >
-                      {interest}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              
             </div>
           </AnimatedSection>
         </div>
