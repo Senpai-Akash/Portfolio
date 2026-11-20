@@ -113,34 +113,12 @@ export function Hero() {
               <div className="relative w-full h-full drop-shadow-[0_20px_45px_rgba(15,76,117,0.4)]">
                 <AsciiPortrait imageSrc="/images/akash-portrait.png" className="w-full h-full" />
               </div>
-
-              {/* Subtle tech label */}
-              <div className="hidden lg:flex items-center gap-1.5 font-mono text-[10px] text-text-muted/60 tracking-wider mt-1 select-none uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent/70 animate-pulse" />
-                <span>interactive ascii canvas // hover to scatter</span>
-              </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={prefersReducedMotion ? { opacity: 0.5 } : { opacity: 0 }}
-        animate={isLoading ? { opacity: 0 } : { opacity: 0.5 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
-      >
-        <span className="text-[10px] font-mono text-text-muted uppercase tracking-widest">
-          Scroll
-        </span>
-        <motion.div
-          animate={prefersReducedMotion ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDown size={14} className="text-text-muted" />
-        </motion.div>
-      </motion.div>
+      
     </section>
   );
   }

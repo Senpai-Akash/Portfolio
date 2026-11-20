@@ -31,6 +31,7 @@
 [data-theme="dark"] {
   /* Surfaces */
   --color-bg:             #1B262C;
+  --color-background:     #1B262C;
   --color-surface:        #0F4C75;
   --color-surface-hover:  #0d3f63;
   --color-surface-subtle: #1e2f38;
@@ -42,6 +43,7 @@
 
   /* Text */
   --color-text-primary:   #FFFFFF;
+  --color-foreground:     #FFFFFF;
   --color-text-secondary: #C5D5DF;
   --color-text-muted:     #7a99ad;
 
@@ -64,6 +66,7 @@
 /* Light theme — variables ready, values to be defined later */
 [data-theme="light"] {
   --color-bg:             #F8FAFC;
+  --color-background:     #F8FAFC;
   --color-surface:        #FFFFFF;
   --color-surface-hover:  #F1F5F9;
   --color-surface-subtle: #E2E8F0;
@@ -73,6 +76,7 @@
   --color-highlight:      #1E293B;
 
   --color-text-primary:   #0F172A;
+  --color-foreground:     #0F172A;
   --color-text-secondary: #475569;
   --color-text-muted:     #94A3B8;
 

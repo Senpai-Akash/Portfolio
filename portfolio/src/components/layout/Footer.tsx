@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUp, Mail } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
 import { navItems, socialLinks } from "@/lib/data";
+import { SocialTooltip, type SocialItem } from "@/components/ui/social-media";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -24,10 +25,24 @@ export function Footer() {
   };
 
   const iconMap: Record<string, React.ReactNode> = {
-    github: <Github size={17} />,
-    linkedin: <Linkedin size={17} />,
-    mail: <Mail size={17} />,
+    github: <Github size={18} />,
+    linkedin: <Linkedin size={18} />,
+    mail: <Mail size={18} />,
   };
+
+  const socialColors: Record<string, string> = {
+    github: "#24292e",
+    linkedin: "#0a66c2",
+    mail: "#ea4335",
+  };
+
+  const socialItems: SocialItem[] = socialLinks.map((link) => ({
+    href: link.url,
+    ariaLabel: link.label,
+    tooltip: link.label === "Email" ? "Email Me" : link.label,
+    color: socialColors[link.icon] ?? "#3282b8",
+    icon: iconMap[link.icon] ?? <Mail size={18} />,
+  }));
 
   return (
     <footer className="border-t border-border bg-bg">
@@ -42,9 +57,7 @@ export function Footer() {
               AKASH
             </button>
             <p className="text-xs text-text-muted">
-
               © {year ?? 2026} Akash Anderson. All rights reserved.
-
             </p>
           </div>
 
@@ -61,33 +74,23 @@ export function Footer() {
             ))}
           </nav>
 
-          {/* Right: Social + Back to top */}
+          {/* Right: Interactive Social Media Tooltips + Back to top */}
           <div className="flex items-center justify-center md:justify-end gap-3 sm:gap-4">
-            {socialLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.url}
-                target={link.url.startsWith("mailto:") ? undefined : "_blank"}
-                rel={
-                  link.url.startsWith("mailto:")
-                    ? undefined
-                    : "noopener noreferrer"
-                }
-                className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-accent hover:bg-surface-subtle active:bg-surface-subtle transition-colors cursor-pointer"
-                aria-label={link.label}
-              >
-                {iconMap[link.icon] ?? <Mail size={17} />}
-              </a>
-            ))}
+            <SocialTooltip
+              items={socialItems}
+              tooltipPosition="top"
+              size="md"
+            />
 
             <div className="w-px h-5 bg-border mx-1" />
 
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-text-muted hover:text-accent hover:bg-surface-subtle active:bg-surface-subtle transition-colors cursor-pointer"
+              className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-surface-subtle/80 border border-border text-text-secondary hover:text-highlight hover:border-accent/40 active:bg-surface-subtle transition-all duration-200 cursor-pointer shadow-xs group"
               aria-label="Back to top"
+              title="Back to top"
             >
-              <ArrowUp size={17} />
+              <ArrowUp size={18} className="transition-transform duration-200 group-hover:-translate-y-0.5" />
             </button>
           </div>
         </div>
