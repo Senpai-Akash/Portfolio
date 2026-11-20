@@ -6,6 +6,7 @@ import { Menu, X, Sun, Moon, Copy, Check, ArrowUpRight } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import { useLoading } from "@/components/LoadingProvider";
 import { navItems, socialLinks } from "@/lib/data";
+import { Dock, DockItem } from "@/components/ui/dock";
 
 /**
  * Tech-inspired corner reticle brackets that define the visual aesthetic of the reference navbar.
@@ -161,17 +162,19 @@ export function Navigation() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center px-3.5 sm:px-6 pointer-events-none transition-all duration-300 ${
           isLoading
-            ? "opacity-0 -translate-y-4 pointer-events-none"
+            ? "opacity-0 -translate-y-4"
             : "opacity-100 translate-y-0"
-        } ${
-          isScrolled
-            ? "bg-bg/85 backdrop-blur-xl border-b border-border shadow-sm py-2.5 sm:py-3"
-            : "bg-bg/40 backdrop-blur-md border-b border-border/30 py-3 sm:py-4"
         }`}
       >
-        <div className="section-container flex items-center justify-between">
+        <div
+          className={`pointer-events-auto flex items-center justify-between md:justify-center gap-2.5 sm:gap-4 md:gap-4 lg:gap-5 rounded-full border transition-all duration-300 ${
+            isScrolled
+              ? "bg-bg/90 backdrop-blur-2xl border-border-strong shadow-xl shadow-black/35 py-1.5 sm:py-2 px-3.5 sm:px-5"
+              : "bg-bg/75 backdrop-blur-xl border-border shadow-lg shadow-black/20 py-2 sm:py-2.5 px-4 sm:px-6"
+          } w-full max-w-[calc(100vw-1.75rem)] sm:max-w-xl md:max-w-none md:w-auto`}
+        >
           {/* Logo / Brand with Tech Reticles (Compact initial "A", typed out to "Akash" on hover/click) */}
           <a
             href="#"
@@ -202,26 +205,45 @@ export function Navigation() {
               )}
             </div>
           </a>
+              <div><span></span><span></span><span></span><span></span></div>
+          {/* Subtle separator on Desktop */}
+          <div className="hidden md:block w-px h-4 bg-border/60" />
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation with Apple-Style Spring Dock Magnification */}
           <div className="hidden md:flex items-center gap-2 lg:gap-2.5">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.href;
-              return (
-                <button
-                  key={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`relative group inline-flex items-center px-3.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-medium tracking-tight border border-dashed transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? "border-accent/60 bg-surface/30 text-highlight font-semibold shadow-xs"
-                      : "border-transparent hover:border-border/60 hover:bg-surface-subtle/30 text-text-secondary hover:text-text-primary"
-                  }`}
-                >
-                  <CornerBrackets active={isActive} size="sm" />
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
+            <Dock
+              variant="navbar"
+              distance={110}
+              magnification={1.12}
+              className="flex items-center gap-2 lg:gap-2.5"
+            >
+              {navItems.map((item) => {
+                const isActive = activeSection === item.href;
+                return (
+                  <DockItem
+                    key={item.href}
+                    variant="navbar"
+                    onClick={() => handleNavClick(item.href)}
+                    className="cursor-pointer"
+                  >
+                    <button
+                      type="button"
+                      className={`relative group inline-flex items-center px-3.5 lg:px-4 py-1.5 text-xs lg:text-[13px] font-medium tracking-tight border border-dashed transition-colors duration-200 cursor-pointer select-none ${
+                        isActive
+                          ? "border-accent/60 bg-surface/30 text-highlight font-semibold shadow-xs"
+                          : "border-transparent hover:border-border/60 hover:bg-surface-subtle/30 text-text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      <CornerBrackets active={isActive} size="sm" />
+                      <span>{item.label}</span>
+                    </button>
+                  </DockItem>
+                );
+              })}
+            </Dock>
+
+            {/* Subtle separator before actions on Desktop */}
+            <div className="w-px h-4 bg-border/60 mx-0.5" />
 
             {/* Distinctive "Copy Email" Action Button */}
             <button
