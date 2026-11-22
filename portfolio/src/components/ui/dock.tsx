@@ -236,7 +236,7 @@ function DockItem({
         role={role}
       >
         {Children.map(children, (child) => {
-          if (React.isValidElement(child)) {
+          if (React.isValidElement(child) && typeof child.type !== 'string') {
             return cloneElement(
               child as React.ReactElement<Record<string, unknown>>,
               {
@@ -268,7 +268,7 @@ function DockItem({
       aria-haspopup='true'
     >
       {Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
+        if (React.isValidElement(child) && typeof child.type !== 'string') {
           return cloneElement(
             child as React.ReactElement<Record<string, unknown>>,
             {
