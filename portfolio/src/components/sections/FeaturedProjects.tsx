@@ -4,6 +4,7 @@ import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { Github } from "lucide-brands";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text";
 import { projects } from "@/lib/data";
 import type { Project } from "@/lib/types";
 
@@ -72,7 +73,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
 
           <h3 className="heading-2 text-highlight text-xl sm:text-2xl md:text-3xl">
-            {project.title}
+            <BlurredStagger text={project.title} delay={0.02} />
           </h3>
 
           <p className="body-lg text-sm sm:text-base md:text-lg">

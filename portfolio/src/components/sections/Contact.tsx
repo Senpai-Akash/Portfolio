@@ -3,7 +3,8 @@
 import { Mail, FileText, ArrowUpRight, Download } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionHeader } from "../ui/SectionHeader";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text";
 import { socialLinks } from "@/lib/data";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -23,14 +24,17 @@ export function Contact() {
         <div className="max-w-2xl">
           <AnimatedSection delay={0.1}>
             <h2 className="heading-display text-[clamp(1.75rem,5vw,3rem)] text-highlight mb-4 sm:mb-6">
-              Let&apos;s build something together.
+              <BlurredStagger text="Let's build something together." delay={0.02} />
             </h2>
           </AnimatedSection>
 
           <AnimatedSection delay={0.15}>
             <p className="body-lg mb-8 sm:mb-10 max-w-lg text-sm sm:text-base md:text-lg">
-              Whether you have a project idea, a question, or just want to
-              connect — I&apos;d love to hear from you.
+              <BlurredStagger
+                as="span"
+                text="Whether you have a project idea, a question, or just want to connect — I'd love to hear from you."
+                delay={0.008}
+              />
             </p>
           </AnimatedSection>
 

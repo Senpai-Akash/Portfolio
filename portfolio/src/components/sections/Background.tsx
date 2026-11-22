@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "fr
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { BlurredStagger } from "@/components/ui/blurred-stagger-text";
 import { timelineEntries } from "@/lib/data";
 import type { TimelineEntry } from "@/lib/types";
 
@@ -226,7 +227,7 @@ const TimelineEntryRow = forwardRef<HTMLDivElement, TimelineEntryRowProps>(
                 className="group/link inline-flex items-center gap-1.5 hover:underline"
               >
                 <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary tracking-tight group-hover/link:text-highlight transition-colors duration-200">
-                  {entry.title}
+                  <BlurredStagger text={entry.title} delay={0.015} />
                 </h3>
                 <ArrowUpRight
                   size={15}
@@ -235,7 +236,7 @@ const TimelineEntryRow = forwardRef<HTMLDivElement, TimelineEntryRowProps>(
               </a>
             ) : (
               <h3 className="text-base sm:text-lg md:text-xl font-bold text-text-primary tracking-tight group-hover:text-highlight transition-colors duration-200">
-                {entry.title}
+                <BlurredStagger text={entry.title} delay={0.015} />
               </h3>
             )}
           </div>
