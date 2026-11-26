@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LoadingProvider } from "@/components/LoadingProvider";
+import { DotPattern } from "@/components/ui/dot-pattern";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -86,7 +87,17 @@ export default function RootLayout({
       </head>
       <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>
-          <LoadingProvider>{children}</LoadingProvider>
+          <LoadingProvider>
+            <DotPattern
+              width={24}
+              height={24}
+              cx={1}
+              cy={1}
+              cr={1}
+              className="fixed inset-0 z-0 h-full w-full pointer-events-none fill-accent/15 [mask-image:radial-gradient(ellipse_90%_90%_at_50%_50%,white_60%,transparent_100%)]"
+            />
+            {children}
+          </LoadingProvider>
         </ThemeProvider>
       </body>
     </html>

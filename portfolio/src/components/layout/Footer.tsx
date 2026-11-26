@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 
 import { ArrowUp, Mail } from "lucide-react";
 import { Github, Linkedin } from "lucide-brands";
@@ -10,12 +9,6 @@ export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  const [year, setYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
 
   const handleNavClick = (href: string) => {
     const el = document.querySelector(href);
@@ -45,7 +38,7 @@ export function Footer() {
   }));
 
   return (
-    <footer className="border-t border-border bg-bg">
+    <footer className="relative z-10 border-t border-border bg-bg/80 backdrop-blur-xs">
       <div className="section-container py-10 sm:py-12 md:py-16">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 text-center md:text-left">
           {/* Left: Wordmark + copyright */}
@@ -56,8 +49,8 @@ export function Footer() {
             >
               AKASH
             </button>
-            <p className="text-xs text-text-muted">
-              © {year ?? 2026} Akash Anderson. All rights reserved.
+            <p className="text-xs text-text-muted" suppressHydrationWarning>
+              © {new Date().getFullYear()} Akash Anderson. All rights reserved.
             </p>
           </div>
 

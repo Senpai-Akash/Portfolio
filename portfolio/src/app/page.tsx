@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <FeaturedProjects />

@@ -5,7 +5,6 @@ import { Github, Linkedin } from "lucide-brands";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { SectionHeader } from "../ui/SectionHeader";
 import { BlurredStagger } from "@/components/ui/blurred-stagger-text";
-import { DotPattern } from "@/components/ui/dot-pattern";
 import { socialLinks } from "@/lib/data";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -16,18 +15,8 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export function Contact() {
   return (
-    <section id="contact" className="relative py-16 sm:py-20 md:py-28 lg:py-32 overflow-hidden">
-      {/* Subtle Dot Pattern Ambient Layer */}
-      <DotPattern
-        width={24}
-        height={24}
-        cx={1}
-        cy={1}
-        cr={1}
-        className="pointer-events-none absolute inset-0 h-full w-full fill-accent/10 [mask-image:radial-gradient(ellipse_600px_450px_at_50%_35%,white,transparent)]"
-      />
-
-      <div className="section-container relative z-10">
+    <section id="contact" className="py-16 sm:py-20 md:py-28 lg:py-32">
+      <div className="section-container">
         <AnimatedSection>
           <SectionHeader title="CONTACT" />
         </AnimatedSection>
